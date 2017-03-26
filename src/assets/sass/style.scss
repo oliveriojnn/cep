@@ -1,0 +1,13 @@
+body{
+	padding:0 10px;
+	background-color:#ECF0F1;
+}
+
+.row {
+	margin-top:10px;
+	@media screen and (max-width:768px) {
+		.buttons {
+			margin:10px;
+		}
+	}
+}

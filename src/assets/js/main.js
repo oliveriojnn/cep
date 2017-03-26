@@ -10,7 +10,7 @@ var app = new Vue({
 		send: function(e) {
 			e.preventDefault();
 			var self = this;
-			self.$http.get('http://viacep.com.br/ws/' + this.cep + '/json/').then(function(result) {
+			self.$http.get('https://viacep.com.br/ws/' + this.cep + '/json/').then(function(result) {
 				self.resultado = result.data;
 				this.status = false;
 				self.cep = '';
