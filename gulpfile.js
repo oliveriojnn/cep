@@ -7,6 +7,7 @@ var rename      = require('gulp-rename');
 var imagemin	= require('gulp-smushit');
 var rm		= require('gulp-rm');
 var htmlmin	= require('gulp-htmlmin');
+var runSequence = require('run-sequence');
 
 gulp.task('server', function() {
 
@@ -68,3 +69,11 @@ gulp.task('sass', function() {
 
 gulp.task('default', ['server'])
 gulp.task('builder', ['imagemin','htmlmin','js'])
+
+gulp.task('build', (callback) => {
+	//['clean', 'copy', 'builder']
+	runSequence('clean',
+              'copy',
+              'builder',
+              callback);
+})
