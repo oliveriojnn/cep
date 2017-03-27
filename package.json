@@ -19,5 +19,8 @@
     "gulp-smushit": "^1.2.0",
     "gulp-uglify": "^2.1.0",
     "gulp-uglifycss": "^1.0.6"
+  },
+  "devDependencies": {
+    "run-sequence": "^1.2.2"
   }
 }
