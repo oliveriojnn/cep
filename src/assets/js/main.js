@@ -10,13 +10,10 @@ var app = new Vue({
 	methods:{
 		send: function(e) {
 			e.preventDefault();
-			var self = this;
-			self.$http.get('https://viacep.com.br/ws/' + this.cep + '/json/')
+			this.$http.get('https://viacep.com.br/ws/' + this.cep + '/json/')
 			.then(function(result) {
 				this.resultado = result.data;
 				this.erro = false;
-				this.cep = '';
-				$('#cep').focus();
 				if (this.resultado.logradouro) {
 					this.ceps.push(self.resultado);
 				}
@@ -24,13 +21,15 @@ var app = new Vue({
 			.catch(function(err) {
 				this.erro = true;
 				this.resultado = {};
+			})
+			.finally( function() {
 				this.cep = '';
 				$('#cep').focus();
 			})
 		},
 		limpar: function(e) {
-			this.ceps = [];
 			e.preventDefault();
+			this.ceps = [];
 			this.status = false;
 			this.cep = '';
 			this.resultado = {};	
