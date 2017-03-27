@@ -35,23 +35,23 @@
 				<div class="row" style="margin-bottom:30px;">
 					<div class="col-md-3">
 						<label for="logradouro">Logradouro</label>
-						<input type="text" v-model="resultado.logradouro" id="lougradouro" class="form-control">
+						<input type="text" v-model="resultado.logradouro" id="lougradouro" class="form-control" readonly>
 					</div>
 					<div class="col-md-2">
 						<label for="bairro">Bairro</label>
-						<input type="text" v-model="resultado.bairro" id="bairro" class="form-control">
+						<input type="text" v-model="resultado.bairro" id="bairro" class="form-control" readonly>
 					</div>
 					<div class="col-md-2">
 						<label for="cidade">Cidade</label>
-						<input type="text" v-model="resultado.localidade" id="cidade" class="form-control">
+						<input type="text" v-model="resultado.localidade" id="cidade" class="form-control" readonly>
 					</div>
 					<div class="col-md-2">
 						<label for="estado">Estado</label>
-						<input type="text" v-model="resultado.uf" id="estado" class="form-control">
+						<input type="text" v-model="resultado.uf" id="estado" class="form-control" readonly>
 					</div>
 					<div class="col-md-2">
 						<label for="ibge">Ibge</label>
-						<input type="text" v-model="resultado.ibge" id="ibge" class="form-control">
+						<input type="text" v-model="resultado.ibge" id="ibge" class="form-control" readonly>
 					</div>
 				</div>
 				<div class="row" v-if="ceps[0]">
