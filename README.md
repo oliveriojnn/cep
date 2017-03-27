@@ -1,5 +1,5 @@
 # cep
-Sistema de buscar cep utilizando a biblioteca javascript Vuejs
+Sistema para buscar cep utilizando a biblioteca javascript Vuejs
 
 Site pessoal: https://oliverio.eti.br
 
