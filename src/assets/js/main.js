@@ -15,7 +15,7 @@ var app = new Vue({
 				this.resultado = result.data;
 				this.erro = false;
 				if (this.resultado.logradouro) {
-					this.ceps.push(self.resultado);
+					this.ceps.push(this.resultado);
 				}
 			})
 			.catch(function(err) {
