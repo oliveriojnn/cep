@@ -10,12 +10,13 @@ const app = new Vue({
 	methods:{
 		send: function(e) {
 			e.preventDefault();
-			this.$http.get('https://viacep.com.br/ws/' + this.cep + '/json/')
+			const self = this;
+			self.$http.get('https://viacep.com.br/ws/' + this.cep + '/json/')
 			.then(function(result) {
 				this.resultado = result.data;
 				this.erro = false;
 				if (this.resultado.logradouro) {
-					this.ceps.push(this.resultado);
+					this.ceps.push(self.resultado);
 				}
 			})
 			.catch(function(err) {
