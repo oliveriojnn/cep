@@ -1,0 +1,10 @@
+
+version: '3'
+
+services:
+  cep:
+    build: .
+    image: cep
+    container_name: cep
+    ports:
+      - "80:80"

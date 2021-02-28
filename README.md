@@ -1,18 +1,9 @@
 # cep
+
 Sistema para buscar cep utilizando a biblioteca javascript Vuejs
 
-Projeto online: https://oliverio.eti.br/projects/cep/
-
-Após fazer o download do projeto.
+Para rodar digite:
 
 ```
-npm install
-```
-
-```
-bower install
-```
-
-```
-gulp build
+docker-compose up --build -d
 ```
