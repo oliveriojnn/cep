@@ -1,6 +1,6 @@
 ## Stage 1
 
-FROM node:10.1.0 as node1
+FROM node:10.1.0 as node
 
 COPY . /tmp
 
@@ -14,17 +14,12 @@ RUN gulp build
 
 ## Stage 2
 
-FROM ubuntu:20.04
+FROM nginx:alpine
 
-RUN apt-get update && apt-get install nginx -y
+COPY --from=node /tmp/dist/ /usr/share/nginx/html/
 
-COPY nginx/default.conf /etc/nginx/sites-enabled/default
-
-COPY --from=node1 --chown=www-data:www-data /tmp/dist/ /var/www/cep/
-
-WORKDIR /var/www/cep/
+WORKDIR /usr/share/nginx/html/
 
 EXPOSE 80
 
-RUN service nginx restart
 CMD ["nginx", "-g", "daemon off;"]
