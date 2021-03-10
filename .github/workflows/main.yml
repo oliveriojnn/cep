@@ -1,20 +1,18 @@
-name: Push to GCR GitHub Action
+name: Docker
+
 on: [push]
+
 jobs:
-  build-and-push-to-gcr:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v1
 
       - name: Docker Build
         uses: benjlevesque/actions-docker-gcr/build@v1.1
-        with:
-          image: my-project/my-image
-          registry: eu.gcr.io
 
       - name: Docker Push
         uses: benjlevesque/actions-docker-gcr/push@v1.1
         with:
-          image: my-project/my-image
-          registry: eu.gcr.io
           gcloud_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
