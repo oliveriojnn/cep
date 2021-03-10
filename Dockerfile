@@ -20,7 +20,7 @@ COPY --from=node /tmp/dist/ /usr/share/nginx/html/
 
 WORKDIR /usr/share/nginx/html/
 
-EXPOSE 8080
-ENV PORT 8080
+EXPOSE 80
+ENV PORT 80
 
 CMD ["nginx", "-g", "daemon off;"]
