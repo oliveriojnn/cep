@@ -10,4 +10,4 @@ jobs:
           gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
           registry: gcr.io
           project_id: oliverio-learn
-          image_name: oliverio-test
+          image_name: oliverio-teste
