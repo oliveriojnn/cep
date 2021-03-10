@@ -10,11 +10,11 @@ jobs:
         uses: benjlevesque/actions-docker-gcr/build@v1.1
         with:
           image: oliverio-learn/my-image
-          registry: eu.gcr.io
+          registry: gcr.io
 
       - name: Docker Push
         uses: benjlevesque/actions-docker-gcr/push@v1.1
         with:
           image: oliverio-learn/my-image
-          registry: eu.gcr.io
+          registry: gcr.io
           gcloud_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
