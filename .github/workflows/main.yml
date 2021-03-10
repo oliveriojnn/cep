@@ -5,9 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: RafikFarhad/push-to-gcr-github-action@v3.0.2
+      - uses: raccoondev/push-docker-gcr
         with:
-          gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
-          registry: gcr.io
-          project_id: oliverio-learn
-          image_name: oliverio-teste
+        gcr_host: eu.gcr.io
+        image_name: teste
+        image_tag: latest
+        env:
+            GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
+            GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
