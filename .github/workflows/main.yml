@@ -4,12 +4,17 @@ jobs:
   build-and-push-to-gcr:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: Industrial/push-docker-gcr
+      - uses: actions/checkout@v1
+
+      - name: Docker Build
+        uses: benjlevesque/actions-docker-gcr/build@v1.1
         with:
-            docker_image_name: oliverio-teste
-            docker_image_tag: latest
-            docker_context: ./
-            gcr_host: gcr.io
-            gcr_project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
-            gcr_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
+          image: my-project/my-image
+          registry: eu.gcr.io
+
+      - name: Docker Push
+        uses: benjlevesque/actions-docker-gcr/push@v1.1
+        with:
+          image: my-project/my-image
+          registry: eu.gcr.io
+          gcloud_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
