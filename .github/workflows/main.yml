@@ -9,7 +9,7 @@ jobs:
       - name: Docker Build
         uses: benjlevesque/actions-docker-gcr/build@v1.1
         with:
-          image:oliverio-learn/my-image
+          image: oliverio-learn/my-image
           registry: eu.gcr.io
 
       - name: Docker Push
