@@ -9,12 +9,12 @@ jobs:
       - name: Docker Build
         uses: benjlevesque/actions-docker-gcr/build@v1.1
         with:
-          image: my-project/my-imagee
+          image: my-project/my-image
           registry: eu.gcr.io
 
       - name: Docker Push
         uses: benjlevesque/actions-docker-gcr/push@v1.1
         with:
-          image: my-project/my-imagee
+          image: my-project/my-image
           registry: eu.gcr.io
           gcloud_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
