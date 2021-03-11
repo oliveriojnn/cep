@@ -1,7 +1,7 @@
 name: Push to GCR GitHub Action
 on: [push]
 jobs:
-  build-and-push-to-gcr:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -11,6 +11,11 @@ jobs:
         with:
           image: oliverio-learn/cep
           registry: gcr.io
+
+  push image to gcr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
 
       - name: Docker Push
         uses: benjlevesque/actions-docker-gcr/push@v1.1
