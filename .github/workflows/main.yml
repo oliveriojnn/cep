@@ -11,8 +11,7 @@ jobs:
         with:
           image: oliverio-learn/cep
           registry: gcr.io
-    steps:
-    needs: build
+
       - name: Docker Push
         uses: benjlevesque/actions-docker-gcr/push@v1.1
         with:
