@@ -12,7 +12,7 @@ jobs:
           image: oliverio-learn/cep
           registry: gcr.io
 
-  push image to gcr:
+  push-image-to-gcr:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
