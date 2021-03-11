@@ -11,12 +11,8 @@ jobs:
         with:
           image: oliverio-learn/cep
           registry: gcr.io
-
-  push-image-to-gcr:
-    needs: build
     steps:
-      - uses: actions/checkout@v1
-
+    needs: build
       - name: Docker Push
         uses: benjlevesque/actions-docker-gcr/push@v1.1
         with:
