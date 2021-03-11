@@ -13,7 +13,6 @@ jobs:
           registry: gcr.io
 
   push-image-to-gcr:
-    runs-on: ubuntu-latest
     needs: build
     steps:
       - uses: actions/checkout@v1
