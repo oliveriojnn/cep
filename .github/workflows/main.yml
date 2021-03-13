@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: Copy production .env
         uses: actions/checkout@v1
-        run: copy('.envProduction', '.env');"
+        run: cp .envProduction env
 
       - name: Docker Build
         uses: benjlevesque/actions-docker-gcr/build@v1.1
