@@ -4,7 +4,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Copy production .env
+        uses: actions/checkout@v1
+        run: copy('.envProduction', '.env');"
 
       - name: Docker Build
         uses: benjlevesque/actions-docker-gcr/build@v1.1
