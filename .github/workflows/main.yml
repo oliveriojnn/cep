@@ -1,9 +1,11 @@
-name: Push to GCR GitHub Action
+name: push to google container registry
 on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v1
+
       - name: Docker Build
         uses: benjlevesque/actions-docker-gcr/build@v1.1
         with:
