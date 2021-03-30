@@ -1,4 +1,4 @@
-name: cloudrun-deploy
+name: cloudrun-deploy.
 on:
   push:
     branches:
