@@ -31,9 +31,9 @@ jobs:
         gcloud config set run/region us-central1
       
     # Deploy the Docker image to the GKE cluster
-    - name: Deploy
-      run: |
-        gcloud run deploy ${{ secrets.GCP_APPLICATION }} --image gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }} \
-        --platform managed \
-        --allow-unauthenticated \
-        --memory 128M
+    #- name: Deploy
+    #  run: |
+    #    gcloud run deploy ${{ secrets.GCP_APPLICATION }} --image gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }} \
+    #    --platform managed \
+    #    --allow-unauthenticated \
+    #    --memory 128M
