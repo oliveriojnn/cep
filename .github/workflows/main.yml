@@ -27,7 +27,7 @@ jobs:
     - name: Build & Publish
       run: |
         gcloud config set project ${{ secrets.GCP_PROJECT }}
-        gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}
+        gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
         gcloud config set run/region us-central1
 
     # Deploy new version image in Kubernetes
