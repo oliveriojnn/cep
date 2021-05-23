@@ -33,7 +33,7 @@ jobs:
     # Deploy new version image in Kubernetes
     - name: Restart deployment
       run: |
-        gcloud container clusters get-credentials sjcc-production --zone us-central1-c --project ${{ secrets.GCP_PROJECT }}
+        gcloud container clusters get-credentials sjcc-production --zone us-central1 --project ${{ secrets.GCP_PROJECT }}
         #kubectl rollout restart deployment dp-primeiro-pod2 
         kubectl set image deployment dp-primeiro-pod2 nginx-container=gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
       
