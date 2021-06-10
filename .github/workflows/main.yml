@@ -13,7 +13,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Copy env
-      run: php -r "file_exists('src/.env') || copy('env-production.txt', 'src/teste.txt');"
+      run: php -r "file_exists('src/.env') || copy('src/env-staging.txt', 'src/teste.txt');"
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         service_account_email: ${{ secrets.GCP_EMAIL }}
@@ -35,7 +35,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Copy env
-      run: php -r "file_exists('src/.env') || copy('src/env-stating.txt', 'src/teste.txt');"
+      run: php -r "file_exists('src/.env') || copy('src/env-production.txt', 'src/teste.txt');"
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         service_account_email: ${{ secrets.GCP_EMAIL }}
