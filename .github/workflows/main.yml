@@ -2,45 +2,48 @@ name: cloudrun-deploy.
 on:
   push:
     branches:
+      - dev
       - master
 jobs:
-  setup-build-publish-deploy:
-    name: Setup, Build, Publish, and Deploy
+  setup-build-publish-deploy-staging:
+    name: Setup, Build, Publish and Deploy
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
     steps:
     - name: Checkout
       uses: actions/checkout@master
-
-    # Setup gcloud CLI
+      run: php -r "file_exists('src/.env') || copy('env-production', 'src/teste.txt');"
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         service_account_email: ${{ secrets.GCP_EMAIL }}
         service_account_key: ${{ secrets.GCP_CREDENTIALS }}
         export_default_credentials: true
-    
-    # Configure Docker with Credentials
     - name: Configure Docker
       run: |
         gcloud auth configure-docker
-      
-    # Build the Docker image
     - name: Build & Publish
       run: |
         gcloud config set project ${{ secrets.GCP_PROJECT }}
         gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
         gcloud config set run/region us-central1
-
-    # Deploy new version image in Kubernetes
-    # - name: Restart deployment
-    #  run: |
-    #    gcloud container clusters get-credentials sjcc-production --zone us-central1 --project ${{ secrets.GCP_PROJECT }}
-    #    #kubectl rollout restart deployment dp-primeiro-pod2 
-    #    kubectl set image deployment dp-primeiro-pod2 nginx-container=gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
-      
-    # Deploy the Docker image to the GKE cluster
-    #- name: Deploy
-    #  run: |
-    #    gcloud run deploy ${{ secrets.GCP_APPLICATION }} --image gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }} \
-    #    --platform managed \
-    #    --allow-unauthenticated \
-    #    --memory 128M
+  setup-build-publish-deploy-production:
+    name: Setup, Build, Publish and Deploy
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+      run: php -r "file_exists('src/.env') || copy('src/env-stating', 'src/teste.txt');"
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        service_account_email: ${{ secrets.GCP_EMAIL }}
+        service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+        export_default_credentials: true
+    - name: Configure Docker
+      run: |
+        gcloud auth configure-docker
+    - name: Build & Publish
+      run: |
+        gcloud config set project ${{ secrets.GCP_PROJECT }}
+        gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
+        gcloud config set run/region us-central1
