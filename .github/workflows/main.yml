@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@v2
     - name: Copy env
       run: |
-        if: github.ref == 'refs/heads/master'
+        if: ${{ github.ref }} == 'refs/heads/master'
           php -r "file_exists('src/.env') || copy('src/env-production.txt', 'src/testando.txt');"
         fi
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
@@ -29,23 +29,23 @@ jobs:
           gcloud config set project ${{ secrets.GCP_PROJECT }}
           gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/staging-${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
           gcloud config set run/region us-central1
-      if: github.ref == 'refs/heads/dev'
+      if: ${{ github.ref }} == 'refs/heads/dev'
     - name: Build & Publish - production
       run: |
           gcloud config set project ${{ secrets.GCP_PROJECT }}
           gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/production-${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
           gcloud config set run/region us-central1
-      if: github.ref == 'refs/heads/master'
+      if: ${{ github.ref }} == 'refs/heads/master'
 
 
     - name: Restart deployment - staging
       run: |
           gcloud container clusters get-credentials sjcc-staging --zone us-central1 --project ${{ secrets.GCP_PROJECT }}
           kubectl set image deployment cep cep=gcr.io/${{ secrets.GCP_PROJECT }}/staging-${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
-      if: github.ref == 'refs/heads/dev'
+      if: ${{ github.ref }} == 'refs/heads/dev'
       
     - name: Restart deployment - production
       run: |
           gcloud container clusters get-credentials sjcc-production --zone us-central1 --project ${{ secrets.GCP_PROJECT }}
           kubectl set image deployment cep cep=gcr.io/${{ secrets.GCP_PROJECT }}/production-${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
-      if: github.ref == 'refs/heads/master'
+      if: ${{ github.ref }} == 'refs/heads/master'
