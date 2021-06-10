@@ -8,12 +8,13 @@ jobs:
   setup-build-publish-deploy-staging:
     name: (Dev) Setup, Build, Publish and Deploy
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev'
     steps:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Copy env
-      run: php -r "file_exists('src/.env') || copy('src/env-staging.txt', 'src/teste.txt');"
+      run: |
+      if: github.ref == 'refs/heads/master'
+        php -r "file_exists('src/.env') || copy('src/env-production.txt', 'src/testando.txt');"
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         service_account_email: ${{ secrets.GCP_EMAIL }}
@@ -27,29 +28,3 @@ jobs:
         gcloud config set project ${{ secrets.GCP_PROJECT }}
         gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
         gcloud config set run/region us-central1
-  setup-build-publish-deploy-production:
-    name: (Master) Setup, Build, Publish and Deploy
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Copy env
-      run: php -r "file_exists('src/.env') || copy('src/env-production.txt', 'src/teste.txt');"
-    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-      with:
-        service_account_email: ${{ secrets.GCP_EMAIL }}
-        service_account_key: ${{ secrets.GCP_CREDENTIALS }}
-        export_default_credentials: true
-    - name: Configure Docker
-      run: |
-        gcloud auth configure-docker
-    - name: Build & Publish
-      run: |
-        gcloud config set project ${{ secrets.GCP_PROJECT }}
-        gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
-        gcloud config set run/region us-central1
-    - name: Restart deployment
-      run: |
-       gcloud container clusters get-credentials sjcc-production --zone us-central1 --project ${{ secrets.GCP_PROJECT }}
-       kubectl set image deployment cep cep=gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
