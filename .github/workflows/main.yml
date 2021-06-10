@@ -24,25 +24,28 @@ jobs:
     - name: Configure Docker
       run: |
         gcloud auth configure-docker
-    - name: Build & Publish
+    - name: Build & Publish - staging
       run: |
-        if: github.ref == 'refs/heads/dev'
           gcloud config set project ${{ secrets.GCP_PROJECT }}
           gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/staging-${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
           gcloud config set run/region us-central1
-        fi
-        if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/dev'
+    - name: Build & Publish - production
+      run: |
           gcloud config set project ${{ secrets.GCP_PROJECT }}
           gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/production-${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
           gcloud config set run/region us-central1
-        fi
-    - name: Restart deployment
+      if: github.ref == 'refs/heads/master'
+
+
+    - name: Restart deployment - staging
       run: |
-        if: github.ref == 'refs/heads/dev'
           gcloud container clusters get-credentials sjcc-staging --zone us-central1 --project ${{ secrets.GCP_PROJECT }}
-          kubectl set image deployment cep cep=gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
-        fi
-        if: github.ref == 'refs/heads/master'
+          kubectl set image deployment cep cep=gcr.io/${{ secrets.GCP_PROJECT }}/staging-${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
+      if: github.ref == 'refs/heads/dev'
+      
+    - name: Restart deployment - production
+      run: |
           gcloud container clusters get-credentials sjcc-production --zone us-central1 --project ${{ secrets.GCP_PROJECT }}
-          kubectl set image deployment cep cep=gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
-        fi
+          kubectl set image deployment cep cep=gcr.io/${{ secrets.GCP_PROJECT }}/production-${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
+      if: github.ref == 'refs/heads/master'
