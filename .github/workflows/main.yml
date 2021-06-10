@@ -1,4 +1,4 @@
-name: cloudrun-deploy.
+name: Deploy CEP.
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
       - master
 jobs:
   setup-build-publish-deploy-staging:
-    name: Setup, Build, Publish and Deploy
+    name: (Dev) Setup, Build, Publish and Deploy
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/dev'
     steps:
@@ -28,7 +28,7 @@ jobs:
         gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
         gcloud config set run/region us-central1
   setup-build-publish-deploy-production:
-    name: Setup, Build, Publish and Deploy
+    name: (Master) Setup, Build, Publish and Deploy
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
@@ -49,3 +49,7 @@ jobs:
         gcloud config set project ${{ secrets.GCP_PROJECT }}
         gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
         gcloud config set run/region us-central1
+    - name: Restart deployment
+      run: |
+       gcloud container clusters get-credentials sjcc-production --zone us-central1 --project ${{ secrets.GCP_PROJECT }}
+       kubectl set image deployment cep cep=gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
