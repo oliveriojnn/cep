@@ -14,7 +14,7 @@ jobs:
     - name: Copy env
       if: github.ref == 'refs/heads/master'
       run: php -r "file_exists('src/.env') || copy('src/env-production.txt', 'src/testando.txt');"
-    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+    - uses: google-github-actions/setup-gcloud@master
       with:
         service_account_email: ${{ secrets.GCP_EMAIL }}
         service_account_key: ${{ secrets.GCP_CREDENTIALS }}
