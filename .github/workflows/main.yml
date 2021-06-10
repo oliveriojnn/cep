@@ -12,10 +12,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Copy env
-      run: |
-        if: ${{ github.ref }} == 'refs/heads/master'
-          php -r "file_exists('src/.env') || copy('src/env-production.txt', 'src/testando.txt');"
-        fi
+      run: php -r "file_exists('src/.env') || copy('src/env-production.txt', 'src/testando.txt');"
+      if: ${{ github.ref }} == 'refs/heads/master'
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         service_account_email: ${{ secrets.GCP_EMAIL }}
