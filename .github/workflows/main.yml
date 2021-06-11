@@ -13,7 +13,9 @@ jobs:
       uses: actions/checkout@v2
     - name: Copy env
       if: github.ref == 'refs/heads/master'
-      run: php -r "file_exists('src/.env') || copy('src/env-production.txt', 'src/testando.txt');"
+      run: php -r "copy('src/env-production.txt', 'src/testando.txt');"
+    - name: Remove env Production file
+      run: php -r "unlink('src/env-production.txt');"
     - uses: google-github-actions/setup-gcloud@master
       with:
         service_account_email: ${{ secrets.GCP_EMAIL }}
@@ -21,26 +23,26 @@ jobs:
         export_default_credentials: true
     - name: Configure Docker
       run: |
-        gcloud auth configure-docker
+          gcloud auth configure-docker
     - name: Build & Publish - staging
       if: github.ref == 'refs/heads/dev'
       run: |
           gcloud config set project ${{ secrets.GCP_PROJECT }}
-          gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/staging-${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
+          gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:staging-${{ github.sha }}
           gcloud config set run/region us-central1
     - name: Build & Publish - production
       if: github.ref == 'refs/heads/master'
       run: |
           gcloud config set project ${{ secrets.GCP_PROJECT }}
-          gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/production-${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
+          gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:production-${{ github.sha }}
           gcloud config set run/region us-central1
     - name: Restart deployment - staging
       if: github.ref == 'refs/heads/dev'
       run: |
           gcloud container clusters get-credentials sjcc-staging --zone us-central1 --project ${{ secrets.GCP_PROJECT }}
-          kubectl set image deployment cep cep=gcr.io/${{ secrets.GCP_PROJECT }}/staging-${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
+          kubectl set image deployment cep cep=gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:staging-${{ github.sha }}
     - name: Restart deployment - production
       if: github.ref == 'refs/heads/master'
       run: |
           gcloud container clusters get-credentials sjcc-production --zone us-central1 --project ${{ secrets.GCP_PROJECT }}
-          kubectl set image deployment cep cep=gcr.io/${{ secrets.GCP_PROJECT }}/production-${{ secrets.GCP_APPLICATION }}:${{ github.sha }}
+          kubectl set image deployment cep cep=gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:production-${{ github.sha }}
