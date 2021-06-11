@@ -1,4 +1,4 @@
-## Stage 1
+## Stage 
 
 FROM node:10.1.0 as node
 
