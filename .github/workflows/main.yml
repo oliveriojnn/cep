@@ -28,21 +28,21 @@ jobs:
       if: github.ref == 'refs/heads/dev'
       run: |
           gcloud config set project ${{ secrets.GCP_PROJECT }}
-          gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:staging-latest
+          gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:staging-${{ github.sha }}
           gcloud config set run/region us-central1
+          gcloud container clusters get-credentials sjcc-staging --zone us-central1 --project ${{ secrets.GCP_PROJECT }}
     - name: Build & Publish - production
       if: github.ref == 'refs/heads/master'
       run: |
           gcloud config set project ${{ secrets.GCP_PROJECT }}
           gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:production-${{ github.sha }}
           gcloud config set run/region us-central1
-    - name: Restart deployment - staging
-      if: github.ref == 'refs/heads/dev'
-      run: |
-          gcloud container clusters get-credentials sjcc-staging --zone us-central1 --project ${{ secrets.GCP_PROJECT }}
-          kubectl set image deployment cep cep=gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:staging-latest
-    - name: Restart deployment - production
-      if: github.ref == 'refs/heads/master'
-      run: |
           gcloud container clusters get-credentials sjcc-production --zone us-central1 --project ${{ secrets.GCP_PROJECT }}
-          kubectl set image deployment cep cep=gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APPLICATION }}:production-${{ github.sha }}
+    - uses: azure/setup-helm@v1
+      id: install
+    - name: Install or Upgrade - staging
+      if: github.ref == 'refs/heads/dev'
+    - run: helm upgrade --install ${{ secrets.GCP_APPLICATION }} Chart/ --set app.version=${{ github.sha }}
+    - name: Install or Upgrade - production
+      if: github.ref == 'refs/heads/master'
+    - run: helm upgrade --install ${{ secrets.GCP_APPLICATION }} Chart/ --set app.version=${{ github.sha }}
