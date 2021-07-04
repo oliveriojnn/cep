@@ -1,0 +1,2 @@
+Aplicação: {{ .Values.app.name }}
+Release: {{ .Release.Name }}

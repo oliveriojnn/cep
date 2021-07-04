@@ -1,0 +1,5 @@
+app:
+  enviroment: "staging"
+  name: "cep"
+  version: "latest"
+  host: "cep.ojnn.com.br"
