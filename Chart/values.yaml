@@ -2,4 +2,4 @@ app:
   enviroment: "staging"
   name: "cep"
   version: "latest"
-  host: "cep.ojnn.com.br"
+  host: "dev.cep.ojnn.com.br"
