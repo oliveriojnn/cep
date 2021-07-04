@@ -42,7 +42,7 @@ jobs:
       id: install
     - name: Install or Upgrade - staging
       if: github.ref == 'refs/heads/dev'
-      run: helm upgrade --install ${{ secrets.GCP_APPLICATION }} Chart/ --set app.version=${{ github.sha }}
+      run: helm upgrade --install ${{ secrets.GCP_APPLICATION }} Chart/ --set app.version=${{ github.sha }} --set app.enviroment=staging --set app.host=dev.cep.ojnn.com.br
     - name: Install or Upgrade - production
       if: github.ref == 'refs/heads/master'
-      run: helm upgrade --install ${{ secrets.GCP_APPLICATION }} Chart/ --set app.version=${{ github.sha }}
+      run: helm upgrade --install ${{ secrets.GCP_APPLICATION }} Chart/ --set app.version=${{ github.sha }} --set app.enviroment=production --set app.host=cep.ojnn.com.br
