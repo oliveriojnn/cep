@@ -13,7 +13,7 @@ spec:
         app: {{ .Release.Name }}
     spec:
       containers:
-        - name: cep
+        - name: {{ .Release.Name }}
           image: "gcr.io/sjcc-infrastructure/{{ .Values.app.name }}:{{ .Values.app.enviroment }}-{{ .Values.app.version }}"
           ports:
             - containerPort: 80
