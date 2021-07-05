@@ -4,9 +4,6 @@ metadata:
   name: {{ .Release.Name }}
   labels:
     app: {{ .Release.Name }}
-  annotations:
-    cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "{{ .Release.Name }}"}'
 spec:
   type: ClusterIP
   ports:
