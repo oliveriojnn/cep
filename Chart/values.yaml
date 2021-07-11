@@ -7,5 +7,5 @@ app:
   rMemory: "256Mi"
   lCpu: "1"
   lMemory: "1024Mi"
-  minReplicas: "1"
-  maxReplicas: "10"
+  minReplicas: "5"
+  maxReplicas: "5"
