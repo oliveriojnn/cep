@@ -36,7 +36,7 @@ jobs:
       id: install
     - name: Install or Upgrade - staging
       if: github.ref == 'refs/heads/dev'
-      run: helm upgrade --install ${{ secrets.GCP_APPLICATION }} Chart/ --set app.version=${{ github.sha }} --set app.enviroment=staging --set app.host=dev.cep.ojnn.com.br --set app.rCpu=0.5 --set app.rMemory=512Mi --set app.lCpu=1 --set app.lMemory=1024Mi --set app.minReplicas=8 --set app.maxReplicas=20 --namespace cep --create-namespace
+      run: helm upgrade --install ${{ secrets.GCP_APPLICATION }} Chart/ --set app.version=${{ github.sha }} --set app.enviroment=staging --set app.host=dev.cep.ojnn.com.br --set app.rCpu=0.5 --set app.rMemory=512Mi --set app.lCpu=1 --set app.lMemory=1024Mi --set app.minReplicas=7 --set app.maxReplicas=20 --namespace cep --create-namespace
     - name: Install or Upgrade - production
       if: github.ref == 'refs/heads/master'
       run: helm upgrade --install ${{ secrets.GCP_APPLICATION }} Chart/ --set app.version=${{ github.sha }} --set app.enviroment=production --set app.host=cep.ojnn.com.br --set app.rCpu=0.5 --set app.rMemory=512Mi --set app.lCpu=1 --set app.lMemory=1024Mi --set app.minReplicas=2 --set app.maxReplicas=10 --namespace cep --create-namespace
