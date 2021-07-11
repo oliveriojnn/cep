@@ -17,21 +17,24 @@ spec:
           image: "gcr.io/sjcc-infrastructure/{{ .Values.app.name }}:{{ .Values.app.enviroment }}-{{ .Values.app.version }}"
           ports:
             - containerPort: 80
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 80
-            periodSeconds: 10
-            failureThreshold: 3
-            initialDelaySeconds: 20
           readinessProbe:
             httpGet:
               path: /
               port: 80
-            periodSeconds: 10
-            failureThreshold: 5
-            initialDelaySeconds: 3
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            failureThreshold: 3
           resources:
             requests:
-              cpu: 10m
-  replicas: 5
+              cpu: {{ .Values.app.rCpu }}
+              memory: {{ .Values.app.rMemory }}
+            limits:
+              cpu: {{ .Values.app.lCpu }}
+              memory: {{ .Values.app.lMemory }}
