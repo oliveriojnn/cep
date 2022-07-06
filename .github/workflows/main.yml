@@ -1,4 +1,4 @@
-name: Deploy CEP.
+name: Deploy CEP
 on:
   push:
     branches:
