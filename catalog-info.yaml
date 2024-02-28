@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: cep
+  annotations:
+    github.com/project-slug: oliveriojnn/cep
+spec:
+  type: other
+  lifecycle: unknown
+  owner: SJCC
