@@ -8,7 +8,6 @@ metadata:
       icon: dashboard
   tags:
     - php
-    - java
   annotations:
     github.com/project-slug: oliveriojnn/cep
     backstage.io/techdocs-ref: dir:docs
