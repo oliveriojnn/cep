@@ -13,3 +13,5 @@ spec:
   type: other
   lifecycle: production
   owner: SJCC
+  consumesApis:
+    - iplocation
