@@ -16,5 +16,5 @@ spec:
   type: other
   lifecycle: production
   owner: SJCC
-  dependencies:
-    - name: iplocation
+  consumesApis:
+    - iplocation
