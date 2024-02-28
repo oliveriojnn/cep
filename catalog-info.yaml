@@ -6,5 +6,5 @@ metadata:
     github.com/project-slug: oliveriojnn/cep
 spec:
   type: other
-  lifecycle: unknown
+  lifecycle: production
   owner: SJCC
