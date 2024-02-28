@@ -6,6 +6,9 @@ metadata:
     - url: https://dashboard.example.com
       title: My Dashboard
       icon: dashboard
+  tags:
+    - php
+    - java
   annotations:
     github.com/project-slug: oliveriojnn/cep
     backstage.io/techdocs-ref: dir:docs
