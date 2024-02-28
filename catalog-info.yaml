@@ -8,6 +8,7 @@ metadata:
       icon: dashboard
   annotations:
     github.com/project-slug: oliveriojnn/cep
+    backstage.io/techdocs-ref: value
 spec:
   type: other
   lifecycle: production
