@@ -3,8 +3,8 @@ kind: Component
 metadata:
   name: cep
   links:
-    - url: https://dashboard.example.com
-      title: My Dashboard
+    - url: https://ne10.uol.com.br
+      title: NE10
       icon: dashboard
   tags:
     - php
