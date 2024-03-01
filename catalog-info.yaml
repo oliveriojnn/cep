@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: cep
+  links:
+    - url: https://ne10.uol.com.br
+      title: NE10
+      icon: dashboard
+  tags:
+    - php
+  annotations:
+    github.com/project-slug: oliveriojnn/cep
+    backstage.io/techdocs-ref: dir:docs
+spec:
+  type: other
+  lifecycle: production
+  owner: SJCC
+  consumesApis:
+    - iplocation
